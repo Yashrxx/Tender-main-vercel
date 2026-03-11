@@ -73,56 +73,49 @@ const Search = (props) => {
       </div>
 
       <h3>Featured Companies</h3>
-      {loading ? (
-        <div className="loader"></div>
-      ) : (
-        <div className="company-grid">
-          {companies.length > 0 ? (
-            companies.slice(0, 12).map((company, index) => (
-              <div
-                key={index}
-                className="company-card"
-                onClick={() => handleCompanyClick(company)}
-              >
-                <img
-                  src={
-                    company.logo
-                      ? company.logo
-                      : 'https://dummyimage.com/100x100/cccccc/000000.png&text=Logo'
-                  }
-                  alt={company.name}
-                  style={{
-                    borderRadius: '8px',
-                    width: '100px',
-                    height: '100px',
-                    objectFit: 'cover',
-                    boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)'
-                  }}
-                />
-                <h4>{company.name}</h4>
-                <p>{company.industry || company.category}</p>
-              </div>
-            ))
-          ) : (
-            <p>No companies found.</p>
-          )}
-        </div>
-      )}
+      <div className="company-grid">
+        {companies.length > 0 ? (
+          companies.slice(0, 12).map((company, index) => (
+            <div
+              key={index}
+              className="company-card"
+              onClick={() => handleCompanyClick(company)}
+            >
+              <img
+                src={
+                  company.logo
+                    ? company.logo
+                    : 'https://dummyimage.com/100x100/cccccc/000000.png&text=Logo'
+                }
+                alt={company.name}
+                style={{
+                  borderRadius: '8px',
+                  width: '100px',
+                  height: '100px',
+                  objectFit: 'cover',
+                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)'
+                }}
+              />
+              <h4>{company.name}</h4>
+              <p>{company.industry || company.category}</p>
+            </div>
+          ))
+        ) : (
+          <p>No companies found.</p>
+        )}
+      </div>
 
       <div className="pagination">
         <button onClick={() => setPage((p) => Math.max(p - 1, 1))} disabled={page === 1}>
           &lt;
         </button>
-        {[...Array(totalPages)].map((_, i) => (
-          <button
-            key={i}
-            className={page === i + 1 ? 'active' : ''}
-            onClick={() => setPage(i + 1)}
-          >
-            {i + 1}
-          </button>
-        ))}
-        <button onClick={() => setPage((p) => Math.min(p + 1, totalPages))} disabled={page === totalPages}>
+        <button
+          className={page === 1 ? 'active' : ''}
+          onClick={() => setPage(1)}
+        >
+          1
+        </button>
+        <button onClick={() => setPage((p) => p + 1)}>
           &gt;
         </button>
       </div>
