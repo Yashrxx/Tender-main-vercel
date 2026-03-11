@@ -11,14 +11,18 @@ const Analytics = (props) => {
   const [chartData, setChartData] = useState([]);
 
   useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const res = await fetch('/api/statsRoute?route=stats');
+        const data = await res.json();
+        setStats(data);
+      } catch (err) {
+        setStats(null);
+      }
+    };
     fetchStats();
     fetchTenderChartData();
   }, []);
-
-  const fetchStats = async () => {
-    const res = await axios.get('https://tender-56x1.onrender.com/api/stats');
-    setStats(res.data);
-  };
 
   const fetchTenderChartData = async () => {
     setChartData([

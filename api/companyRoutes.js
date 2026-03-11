@@ -1,5 +1,6 @@
 const path = require('path');
 const supabase = require('../backend/supabaseClient');
+const url = require('url');
 
 const uploadToSupabase = async (file, folder = 'logos') => {
   if (!file) return null;
@@ -16,6 +17,15 @@ const uploadToSupabase = async (file, folder = 'logos') => {
 };
 
 module.exports = async (req, res) => {
+  const parsedUrl = url.parse(req.url, true);
+  const route = parsedUrl.query.route;
+
+  if (req.method === 'GET' && route === 'allCompanies') {
+    const { data, error } = await supabase.from('companies').select('*');
+    if (error) return res.status(500).json({ error: error.message });
+    return res.status(200).json(data);
+  }
+
   // Implement company profile creation, update, fetch, etc. as needed
   // Example: create profile
   if (req.method === 'POST' && req.url.endsWith('/companyProfile/create')) {

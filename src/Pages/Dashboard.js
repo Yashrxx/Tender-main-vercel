@@ -19,28 +19,6 @@ const Dashboard = ({mode}) => {
       [index]: !prev[index]
     }));
   };
-  useEffect(() => {
-    const fetchCompanyTenders = async () => {
-      setLoading(true);
-      try {
-        const token = localStorage.getItem('token');
-        const res = await fetch('/api/tenderRoutes/newTender', {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            'auth-token': token
-          }
-        });
-        const data = await res.json();
-        console.log("Fetched company tenders:", data);
-        setTenders(data || []);
-      } catch (err) {
-        console.error("Error fetching company's tenders:", err);
-      }
-      setLoading(false); // 👈 Stop loading
-    };
-    fetchCompanyTenders();
-  }, [user]);
 
   const [loading, setLoading] = useState(true);
   const formatDate = (dateStr) => {
@@ -54,6 +32,24 @@ const Dashboard = ({mode}) => {
         year: 'numeric',
       });
   };
+
+  useEffect(() => {
+    const fetchCompanyTenders = async () => {
+      try {
+        const res = await fetch(`/api/tenderRoutes?route=companyTenders&companyId=${user.companyId}`);
+        const data = await res.json();
+        if (Array.isArray(data)) {
+          setTenders(data);
+        } else {
+          setTenders([]);
+        }
+      } catch (err) {
+        setTenders([]);
+      }
+      setLoading(false);
+    };
+    fetchCompanyTenders();
+  }, [user]);
 
   return (
     <div className={`tenders-container ${mode === 'dark' ? 'dark-mode' : ''}`}>

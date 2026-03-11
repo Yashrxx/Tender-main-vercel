@@ -13,21 +13,20 @@ const Search = (props) => {
 
   useEffect(() => {
     const fetchCompanies = async () => {
-      setLoading(true);
       try {
-        const res = await fetch(`/api/companyRoutes/search?query=${encodeURIComponent(query)}&page=${page}`);
+        const res = await fetch('/api/companyRoutes?route=allCompanies');
         const data = await res.json();
-        setCompanies(data.results || []);
-        setTotalPages(data.totalPages || 1);
+        if (Array.isArray(data)) {
+          setCompanies(data);
+        } else {
+          setCompanies([]);
+        }
       } catch (err) {
-        console.error('Failed to fetch companies', err);
-      } finally {
-        setLoading(false);
+        setCompanies([]);
       }
     };
-
     fetchCompanies();
-  }, [query, page]);
+  }, []);
 
   const handleInputChange = (e) => {
     setQuery(e.target.value);
