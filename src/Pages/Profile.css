@@ -1,0 +1,141 @@
+* {
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #f8f9fb;
+}
+
+.container {
+  max-width: 800px;
+  margin: 50px auto;
+  padding: 40px;
+  background-color: #fff;
+  border-radius: 10px;
+}
+
+h1 {
+  font-size: 28px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+.subtext {
+  color: #6c757d;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.form label {
+  display: block;
+  margin-top: 20px;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="file"],
+textarea {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #d3d3d3;
+  border-radius: 8px;
+  font-size: 14px;
+  background-color: #fafafa;
+  transition: border 0.3s;
+}
+
+input:focus,
+textarea:focus {
+  border-color: #6366f1;
+  outline: none;
+  background-color: #fff;
+}
+
+.upload-section {
+  margin-top: 30px;
+}
+
+.upload-box {
+  border: 2px dashed #c5c7cb;
+  border-radius: 10px;
+  padding: 30px;
+  text-align: center;
+  background-color: #f9fafb;
+  color: #6c757d;
+  font-size: 14px;
+}
+
+.upload-box strong {
+  display: block;
+  font-size: 16px;
+  margin-bottom: 5px;
+  color: #333;
+}
+
+.upload-section img {
+  margin-top: 10px;
+  display: block;
+  max-width: 100%;
+  height: auto;
+  border-radius: 6px;
+}
+
+/* Button container to center buttons */
+.button-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+/* Save button */
+.save-button {
+  padding: 12px 30px;
+  background-color: #6366f1;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.save-button:hover {
+  background-color: #4f46e5;
+}
+
+/* Edit button (optional if you want consistent style) */
+.edit-button {
+  padding: 12px 30px;
+  background-color: #6366f1;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.edit-button:hover {
+  background-color: #4f46e5;
+}
+
+.loading-spinner {
+  margin: 2rem auto;
+  border: 6px solid #f3f3f3;
+  border-top: 6px solid #007bff;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

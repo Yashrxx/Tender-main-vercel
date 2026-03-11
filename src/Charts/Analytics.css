@@ -1,0 +1,110 @@
+.analytics-container {
+  padding: 2rem;
+  font-family: sans-serif;
+}
+
+.stats-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  justify-content: space-between;
+}
+
+.card {
+  flex: 1 1 22%;
+  min-width: 200px;
+  padding: 1rem;
+  border-radius: 12px;
+  color: white;
+  font-size: 1.1rem;
+  text-align: center;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  transition: transform 0.2s ease-in-out;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.card strong {
+  font-size: 2rem;
+  display: block;
+  margin-top: 0.5rem;
+}
+
+.cyan { background: #00bcd4; }
+.green { background: #4caf50; }
+.yellow { background: #ffc107; color: #000; }
+.red { background: #f44336; }
+
+h2{
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.chart-box {
+  margin-top: 2rem;
+}
+
+/* ✅ Medium screens (around 1100px) */
+@media (max-width: 1100px) {
+  .card {
+    flex: 1 1 45%;
+  }
+
+  .card strong {
+    font-size: 1.8rem;
+  }
+
+  .chart-box h3 {
+    font-size: 1.3rem;
+  }
+}
+
+/* ✅ Tablets or small laptops (550px–750px) */
+@media (max-width: 750px) {
+  .stats-cards {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .card {
+    width: 80%;
+    font-size: 1rem;
+  }
+
+  .card strong {
+    font-size: 1.6rem;
+  }
+
+  .chart-box h3 {
+    font-size: 1.2rem;
+    text-align: center;
+  }
+}
+
+/* ✅ Mobile screens (<= 350px) */
+@media (max-width: 400px) {
+  .analytics-container {
+    padding: 1rem;
+  }
+
+  .card {
+    width: 100%;
+    font-size: 0.95rem;
+    padding: 0.8rem;
+  }
+
+  .card strong {
+    font-size: 1.4rem;
+  }
+
+  .chart-box {
+    margin-top: 1rem;
+  }
+
+  .chart-box h3 {
+    font-size: 1rem;
+  }
+}

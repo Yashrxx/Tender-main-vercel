@@ -1,0 +1,29 @@
+{
+  "development": {
+    "username": "tender_client_user",
+    "password": "W46pzXNlBLthNGpwVtSYTDRSjYNslRh9",
+    "database": "tender_client",
+    "host": "dpg-d1in962li9vc73dg1aq0-a.oregon-postgres.render.com",
+    "dialect": "postgres",
+    "dialectOptions": {
+      "ssl": {
+        "require": true,
+        "rejectUnauthorized": false
+      }
+    }
+  },
+  "test": {
+    "username": "root",
+    "password": null,
+    "database": "database_test",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "root",
+    "password": null,
+    "database": "database_production",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}

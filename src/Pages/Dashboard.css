@@ -1,0 +1,325 @@
+/* Container Setup */
+.tenders-container {
+  padding: 2rem;
+  background-color: #f9fafb;
+  height:100vh;
+}
+
+/* Header */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.header h1 {
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+.new-tender {
+  background-color: #6366f1;
+  color: white;
+  font-weight: 500;
+  padding: 0.6rem 1rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+  list-style: none;
+  text-decoration: none;
+}
+
+.new-tender:hover {
+  background-color: #4f46e5;
+}
+
+/* Filters Scroll */
+.filters-scroll {
+  display: flex;
+  overflow-x: auto;
+  gap: 0.75rem;
+  padding: 1rem 0;
+  scrollbar-width: none;
+}
+
+.filters-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.category-button {
+  white-space: nowrap;
+  padding: 0.5rem 1rem;
+  background-color: #f3f4f6;
+  border: 1px solid #d1d5db;
+  border-radius: 9999px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.category-button:hover {
+  background-color: #e5e7eb;
+}
+
+.category-button.active-filter {
+  background-color: #6366f1;
+  color: white;
+  border-color: transparent;
+}
+
+/* Tender Cards */
+.tender-cards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.25rem;
+  padding: 1.5rem 0;
+}
+
+.tender-card {
+  background: white;
+  border-radius: 16px;
+  padding: 1.25rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e5e7eb;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  transition: all 0.25s ease;
+  position: relative;
+}
+
+.tender-card:hover {
+  transform: scale(1.015);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-header h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #111827;
+  margin: 0;
+}
+
+.status-chip {
+  padding: 0.35rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.status-chip.open {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.status-chip.closed {
+  background: #fee2e2;
+  color: #b91c1c;
+}
+
+.status-chip.pending {
+  background: #fef9c3;
+  color: #ca8a04;
+}
+
+.category-chip {
+  background: #eef2ff;
+  color: #4338ca;
+  font-size: 0.8rem;
+  font-weight: 500;
+  padding: 0.3rem 0.6rem;
+  border-radius: 8px;
+  width: fit-content;
+}
+
+.card-body p {
+  font-size: 0.92rem;
+  color: #374151;
+  line-height: 1.5;
+}
+
+.description {
+  font-size: 0.85rem;
+  color: #4b5563;
+  line-height: 1.6;
+}
+
+.view-more-btn {
+  background-color: #6366f1;
+  color: white;
+  padding: 0.45rem 0.95rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  margin-top: auto;
+  align-self: flex-start;
+  cursor: pointer;
+  transition: background 0.2s;
+  border: none;
+}
+
+.view-more-btn:hover {
+  background-color: #4f46e5;
+}
+
+.loading-spinner {
+  margin: 2rem auto;
+  border: 6px solid #f3f3f3;
+  border-top: 6px solid #6366f1;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1100px) {
+  .tender-cards-container {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+}
+
+@media (max-width: 650px) {
+  .tender-cards-container {
+    padding: 0.5rem 0;
+  }
+
+  .tender-card {
+    padding: 1rem;
+  }
+
+  .card-header h3 {
+    font-size: 1.1rem;
+  }
+
+  .card-body p {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .tender-card {
+    padding: 0.85rem;
+  }
+
+  .card-body p,
+  .view-more-btn {
+    font-size: 0.8rem;
+  }
+
+  .card-header h3 {
+    font-size: 1rem;
+  }
+
+  .status-chip,
+  .category-chip {
+    font-size: 0.72rem;
+    padding: 0.25rem 0.55rem;
+  }
+}
+
+/* 🌙 Dark Mode Overrides */
+.dark-mode {
+  background-color: #1f2937;
+  color: #f3f4f6;
+}
+
+.dark-mode .tenders-container {
+  background-color: #1f2937;
+  color: #f3f4f6;
+}
+
+.dark-mode .header h1 {
+  color: #f3f4f6;
+}
+
+.dark-mode .new-tender {
+  background-color: #4f46e5;
+  color: white;
+}
+
+.dark-mode .new-tender:hover {
+  background-color: #4338ca;
+}
+
+.dark-mode .category-button {
+  background-color: #374151;
+  color: #f3f4f6;
+  border-color: transparent;
+}
+
+.dark-mode .category-button:hover {
+  background-color: #4b5563;
+}
+
+.dark-mode .category-button.active-filter {
+  background-color: #6366f1;
+  color: white;
+}
+
+.dark-mode .tender-card {
+  background-color: #374151;
+  border-color: #4b5563;
+  color: #f3f4f6;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.dark-mode .tender-card:hover {
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.6);
+}
+
+.dark-mode .card-header h3 {
+  color: #f9fafb;
+}
+
+.dark-mode .card-body p,
+.dark-mode .description {
+  color: #e5e7eb;
+}
+
+.dark-mode .status-chip.open {
+  background-color: #166534;
+  color: #dcfce7;
+}
+
+.dark-mode .status-chip.closed {
+  background-color: #7f1d1d;
+  color: #fee2e2;
+}
+
+.dark-mode .status-chip.pending {
+  background-color: #78350f;
+  color: #fef9c3;
+}
+
+.dark-mode .category-chip {
+  background-color: #312e81;
+  color: #c7d2fe;
+}
+
+.dark-mode .view-more-btn {
+  background-color: #6366f1;
+  color: white;
+}
+
+.dark-mode .view-more-btn:hover {
+  background-color: #4f46e5;
+}
+
+.dark-mode .loading-spinner {
+  border-top-color: #6366f1;
+  border-color: #4b5563;
+}

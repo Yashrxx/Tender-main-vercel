@@ -1,0 +1,192 @@
+.abt {
+    /* background-color: #141414; */
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 93vh;
+    /* border: 2px solid white; */
+
+    .imgh {
+        height: 500px;
+        width: 30%;
+        border-radius: 13px;
+        /* border: 2px solid wheat; */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .adz {
+            height: 90%;
+            width: 80%;
+            border-radius: 13px;
+        }
+    }
+
+    .conth {
+        height: 500px;
+        width: 50%;
+        border-radius: 13px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+
+        .txtmy {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 90%;
+            height: 55%;
+            p{
+                line-height: 2;
+                color: thistle;
+            }
+        }
+
+        .contactInfo {
+            color: thistle;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            gap: 30px;
+            width: 90%;
+            height: 35%;
+            .ci-1 {
+                margin-left: 0px;
+                width: 40%;
+            }
+
+            .ci-2 {
+                width: 40%;
+            }
+        }
+    }
+}
+@media (max-width:1150px) {
+    .abt {
+    background-color: #141414;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 93vh;
+
+    .imgh {
+        height: 500px;
+        width: 30%;
+        border-radius: 13px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .adz {
+            height: 90%;
+            width: 80%;
+            border-radius: 13px;
+        }
+    }
+
+    .conth {
+        height: 500px;
+        width: 50%;
+        border-radius: 13px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+
+        .txtmy {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 90%;
+            height: 55%;
+            p{
+                line-height: 1.2;
+            }
+        }
+
+        .contactInfo {
+            color: thistle;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-evenly;
+            width: 90%;
+            height: 35%;
+
+            .ci-1 {
+                width: 40%;
+            }
+
+            .ci-2 {
+                width: 40%;
+            }
+        }
+    }
+}
+}
+@media (max-width:665px) {
+    .abt {
+    background-color: #141414;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    height: 1200px;
+    h1{
+        margin-bottom: 15px;
+    }
+    .imgh {
+        height: 400px;
+        width: 100%;
+        border-radius: 13px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .adz {
+            height: 70%;
+            width: 80%;
+            border-radius: 13px;
+        }
+    }
+
+    .conth {
+        height: 650px;
+        width: 100%;
+        border-radius: 13px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-evenly;
+        align-items: center;
+
+        .txtmy {
+            /* border: 2px solid red; */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 90%;
+            height: 60%;
+            p{
+                line-height: 1.4;
+                color: rgb(159, 158, 158);
+            }
+        }
+
+        .contactInfo {
+            color: thistle;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            width: 90%;
+            height: 40%;
+
+            .ci-1 {
+                width: 100%;
+            }
+
+            .ci-2 {
+                width: 100%;
+            }
+        }
+    }
+}
+}

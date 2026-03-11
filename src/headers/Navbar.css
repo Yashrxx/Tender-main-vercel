@@ -1,0 +1,25 @@
+.navbar {
+    color: black;
+    background-color: thistle;
+    .corner {
+        margin-right: 0px;
+    }
+}
+
+.nav-shadow-dark {
+  border-bottom: 2px solid greenyellow;
+  box-shadow:
+    0 1px 1px greenyellow,
+    0 2px 2px greenyellow,
+    0 3px 3px limegreen,
+    0 4px 4px limegreen,
+}
+
+.nav-shadow-light {
+  border-bottom: 2px solid cyan;
+  box-shadow:
+    0 1px 1px lightblue,
+    0 2px 2px lightblue,
+    0 3px 3px cyan,
+    0 4px 4px cyan,
+}
