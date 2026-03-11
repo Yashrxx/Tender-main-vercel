@@ -8,16 +8,25 @@ const supabaseKey = (process.env.SUPABASE_SERVICE_ROLE_KEY || '').trim();
 
 module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, auth-token');
   if (req.method === 'OPTIONS') return res.status(200).end();
-  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
   try {
     if (!supabaseUrl || !supabaseKey) {
-      return res.status(500).json({ error: 'Missing Supabase credentials' });
+      return res.status(500).json({ error: 'Missing Supabase credentials', hasUrl: !!supabaseUrl, hasKey: !!supabaseKey });
     }
     const supabase = createClient(supabaseUrl, supabaseKey);
     const route = req.query.route;
+
+    // GET /api/auth?route=debug — check table structure
+    if (req.method === 'GET' && route === 'debug') {
+      const { data, error } = await supabase.from('users').select('*').limit(1);
+      const cols = data && data.length > 0 ? Object.keys(data[0]) : [];
+      return res.status(200).json({ tableExists: !error, columns: cols, error: error ? { message: error.message, code: error.code, hint: error.hint, details: error.details } : null, rowCount: data ? data.length : 0 });
+    }
+
+    if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
+
     if (route === 'createuser') {
       const { name, email, phone, password } = req.body;
       if (!name || !email || !password) {
@@ -31,7 +40,15 @@ module.exports = async (req, res) => {
       const secPass = await bcrypt.hash(password, salt);
       const { data: newUser, error: createError } = await supabase.from('users').insert([{ name, email, phone, password: secPass }]).select();
       if (createError) {
-        return res.status(500).json({ success: false, error: createError.message || JSON.stringify(createError), code: createError.code, hint: createError.hint, details: createError.details });
+        return res.status(500).json({
+          success: false,
+          error: String(createError.message || createError),
+          code: createError.code,
+          hint: createError.hint,
+          details: createError.details,
+          statusCode: createError.statusCode,
+          raw: Object.getOwnPropertyNames(createError).reduce((o, k) => { o[k] = createError[k]; return o; }, {})
+        });
       }
       if (!newUser || newUser.length === 0) {
         return res.status(500).json({ success: false, error: 'Insert returned no data' });
