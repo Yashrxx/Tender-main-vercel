@@ -50,7 +50,7 @@ function App() {
   }, [setIsAuthenticated]);
 
   return (
-    <Router basename='/Tender'>
+    <Router>
       <Navbar btnText={btnText} mode={mode} toggleMode={toggleMode} username={username} />
       
       <Routes>
