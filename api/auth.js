@@ -23,7 +23,7 @@ module.exports = async (req, res) => {
       if (!name || !email || !password) {
         return res.status(400).json({ error: 'Name, email, and password are required' });
       }
-      const { data: existingUser } = await supabase.from('users').select('*').eq('email', email).single();
+      const { data: existingUser, error: lookupError } = await supabase.from('users').select('*').eq('email', email).maybeSingle();
       if (existingUser) {
         return res.status(400).json({ success: false, error: 'User already exists' });
       }
@@ -31,7 +31,10 @@ module.exports = async (req, res) => {
       const secPass = await bcrypt.hash(password, salt);
       const { data: newUser, error: createError } = await supabase.from('users').insert([{ name, email, phone, password: secPass }]).select();
       if (createError) {
-        return res.status(500).json({ success: false, error: createError.message });
+        return res.status(500).json({ success: false, error: createError.message, detail: 'insert failed' });
+      }
+      if (!newUser || newUser.length === 0) {
+        return res.status(500).json({ success: false, error: 'Insert returned no data' });
       }
       const payload = { user: { id: newUser[0].id, name: newUser[0].name, email: newUser[0].email } };
       const authToken = jwt.sign(payload, JWT_SECRET);
@@ -42,7 +45,7 @@ module.exports = async (req, res) => {
       if (!email || !password) {
         return res.status(400).json({ error: 'Email and password are required' });
       }
-      const { data: user, error: userError } = await supabase.from('users').select('*').eq('email', email).single();
+      const { data: user, error: userError } = await supabase.from('users').select('*').eq('email', email).maybeSingle();
       if (userError || !user) {
         return res.status(400).json({ success: false, error: 'Invalid credentials' });
       }
