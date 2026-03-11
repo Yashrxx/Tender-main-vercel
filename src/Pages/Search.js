@@ -6,8 +6,6 @@ const Search = (props) => {
   const [query, setQuery] = useState('');
   const [companies, setCompanies] = useState([]);
   const [page, setPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
-  const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
 
