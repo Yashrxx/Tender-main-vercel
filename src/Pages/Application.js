@@ -12,7 +12,7 @@ const Application = () => {
   useEffect(() => {
     const fetchTender = async () => {
       try {
-        const res = await fetch(`/api/tenderRoutes?id=${id}`);
+        const res = await fetch(`/api/tenders?id=${id}`);
         const data = await res.json();
         setTender(data);
       } catch (error) {

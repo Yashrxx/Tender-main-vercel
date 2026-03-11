@@ -21,7 +21,7 @@ const Tenders = () => {
   useEffect(() => {
     const fetchAllTenders = async () => {
       try {
-        const res = await fetch('/api/tenderRoutes?route=allTenders');
+        const res = await fetch('/api/tenders?route=allTenders');
         const data = await res.json();
 
         if (Array.isArray(data)) {

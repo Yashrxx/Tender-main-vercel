@@ -36,7 +36,7 @@ const Dashboard = ({mode}) => {
   useEffect(() => {
     const fetchCompanyTenders = async () => {
       try {
-        const res = await fetch(`/api/tenderRoutes?route=companyTenders&companyId=${user.companyId}`);
+        const res = await fetch(`/api/tenders?route=companyTenders&companyId=${user.companyId}`);
         const data = await res.json();
         if (Array.isArray(data)) {
           setTenders(data);

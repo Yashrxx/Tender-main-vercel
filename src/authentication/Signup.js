@@ -39,7 +39,7 @@ const Signup = (props) => {
 
     try {
       setLoading(true);
-      const res = await fetch('/api/auth/createuser', {
+      const res = await fetch('/api/auth?route=createuser', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(trimmedData)
@@ -55,7 +55,7 @@ const Signup = (props) => {
       }
 
       if (json.success) {
-        localStorage.setItem('token', json.authToken);
+        localStorage.setItem('token', json.authtoken);
         localStorage.setItem('user', JSON.stringify(json.user));
         setIsAuthenticated(true);
         setUser(json.user.name);

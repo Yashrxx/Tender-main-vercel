@@ -18,7 +18,7 @@ const Login = (props) => {
         setLoading(true);
 
         try {
-            const response = await fetch('/api/auth/login', {
+            const response = await fetch('/api/auth?route=login', {
                 method: 'POST',
                 headers: {
                     'Content-type': 'application/json'
@@ -29,9 +29,9 @@ const Login = (props) => {
             const json = await response.json();
             console.log("Login response:", json); // Debugging
 
-            if (response.ok && json.authToken && json.user) {
+            if (response.ok && json.authtoken && json.user) {
                 // Save data to localStorage
-                localStorage.setItem('token', json.authToken);
+                localStorage.setItem('token', json.authtoken);
                 localStorage.setItem('username', json.user.name);
                 localStorage.setItem('email', json.user.email);
                 localStorage.setItem('user', JSON.stringify(json.user));

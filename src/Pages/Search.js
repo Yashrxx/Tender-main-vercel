@@ -12,7 +12,7 @@ const Search = (props) => {
   useEffect(() => {
     const fetchCompanies = async () => {
       try {
-        const res = await fetch('/api/companyRoutes?route=allCompanies');
+        const res = await fetch('/api/companies?route=allCompanies');
         const data = await res.json();
         if (Array.isArray(data)) {
           setCompanies(data);

@@ -22,7 +22,7 @@ const ApplyTender = (props) => {
 
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('/api/tenderRoutes', {
+      const response = await fetch('/api/tenders?route=application', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
