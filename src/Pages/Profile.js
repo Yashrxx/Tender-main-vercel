@@ -120,10 +120,7 @@ const Profile = (props) => {
       if (formData[key]) {
         submitData.append(key, formData[key]);
       }
-    }
-
-    const endpoint = profileExists ? 'update' : 'create';
-    const method = profileExists ? 'PUT' : 'POST';
+    }    const method = profileExists ? 'PUT' : 'POST';
 
     try {      const res = await fetch(`/api/companyRoutes`, {
         method,
