@@ -31,8 +31,7 @@ const Profile = (props) => {
       return;
     }
 
-    try {
-      const res = await fetch(`/api/companyRoutes/companyProfile?email=${user.email}`, {
+    try {      const res = await fetch(`/api/companyRoutes?email=${user.email}`, {
         headers: { 'auth-token': token }
       });
 
@@ -126,8 +125,7 @@ const Profile = (props) => {
     const endpoint = profileExists ? 'update' : 'create';
     const method = profileExists ? 'PUT' : 'POST';
 
-    try {
-      const res = await fetch(`/api/companyRoutes/companyProfile/${endpoint}`, {
+    try {      const res = await fetch(`/api/companyRoutes`, {
         method,
         headers: { 'auth-token': token },
         body: submitData
