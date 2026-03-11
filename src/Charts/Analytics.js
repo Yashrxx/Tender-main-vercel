@@ -12,7 +12,7 @@ const Analytics = (props) => {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const res = await fetch('/api/statsRoute?route=stats');
+        const res = await fetch('/api/statsRoute');
         const data = await res.json();
         setStats(data);
       } catch (err) {
