@@ -8,31 +8,24 @@ const supabaseKey = (process.env.SUPABASE_SERVICE_ROLE_KEY || '').trim();
 
 module.exports = async (req, res) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, auth-token');
   if (req.method === 'OPTIONS') return res.status(200).end();
+  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
+
   try {
     if (!supabaseUrl || !supabaseKey) {
-      return res.status(500).json({ error: 'Missing Supabase credentials', hasUrl: !!supabaseUrl, hasKey: !!supabaseKey });
+      return res.status(500).json({ error: 'Missing Supabase credentials' });
     }
     const supabase = createClient(supabaseUrl, supabaseKey);
     const route = req.query.route;
-
-    // GET /api/auth?route=debug — check table structure
-    if (req.method === 'GET' && route === 'debug') {
-      const { data, error } = await supabase.from('users').select('*').limit(1);
-      const cols = data && data.length > 0 ? Object.keys(data[0]) : [];
-      return res.status(200).json({ tableExists: !error, columns: cols, error: error ? { message: error.message, code: error.code, hint: error.hint, details: error.details } : null, rowCount: data ? data.length : 0 });
-    }
-
-    if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
     if (route === 'createuser') {
       const { name, email, phone, password } = req.body;
       if (!name || !email || !password) {
         return res.status(400).json({ error: 'Name, email, and password are required' });
       }
-      const { data: existingUser, error: lookupError } = await supabase.from('users').select('*').eq('email', email).maybeSingle();
+      const { data: existingUser } = await supabase.from('users').select('*').eq('email', email).maybeSingle();
       if (existingUser) {
         return res.status(400).json({ success: false, error: 'User already exists' });
       }
@@ -40,7 +33,7 @@ module.exports = async (req, res) => {
       const secPass = await bcrypt.hash(password, salt);
       const { data: newUser, error: createError } = await supabase.from('users').insert([{ name, email, phone, password: secPass }]).select();
       if (createError) {
-        return res.status(500).json({ success: false, error: createError.message || JSON.stringify(createError), code: createError.code, hint: createError.hint, details: createError.details });
+        return res.status(500).json({ success: false, error: createError.message || 'Insert failed' });
       }
       if (!newUser || newUser.length === 0) {
         return res.status(500).json({ success: false, error: 'Insert returned no data' });
@@ -49,6 +42,7 @@ module.exports = async (req, res) => {
       const authToken = jwt.sign(payload, JWT_SECRET);
       return res.status(201).json({ success: true, authtoken: authToken, user: payload.user });
     }
+
     if (route === 'login') {
       const { email, password } = req.body;
       if (!email || !password) {
@@ -66,9 +60,10 @@ module.exports = async (req, res) => {
       const authToken = jwt.sign(payload, JWT_SECRET);
       return res.status(200).json({ success: true, authtoken: authToken, user: { id: user.id, name: user.name, email: user.email, phone: user.phone } });
     }
+
     return res.status(404).json({ error: 'Route not found' });
   } catch (err) {
     console.error('Auth error:', err);
-    return res.status(500).json({ error: 'Internal server error', details: err.message });
+    return res.status(500).json({ error: 'Internal server error' });
   }
 };
