@@ -1,12 +1,12 @@
 import { useContext, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Navigate } from 'react-router-dom';
 import { Col } from 'react-bootstrap';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { UserContext } from '../context/userContext';
 
 const Signup = (props) => {
-  const { setUser, setIsAuthenticated } = useContext(UserContext);
+  const { setUser, isAuthenticated, setIsAuthenticated } = useContext(UserContext);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [credentials, setCredentials] = useState({
@@ -74,6 +74,10 @@ const Signup = (props) => {
       setLoading(false);
     }
   };
+  // If already logged in, redirect to tenders
+  if (isAuthenticated) {
+    return <Navigate to="/tenders" replace />;
+  }
 
   return (
     <form onSubmit={handleSubmit} style={{ color: props.mode === 'dark' ? 'white' : 'black' }}>

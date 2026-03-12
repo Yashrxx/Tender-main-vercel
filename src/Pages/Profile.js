@@ -113,18 +113,26 @@ const Profile = (props) => {
       return;
     }
 
-    const submitData = new FormData();
-    for (const key in formData) {
-      if (formData[key]) {
-        submitData.append(key, formData[key]);
-      }
-    }    const method = profileExists ? 'PUT' : 'POST';
+        // Send JSON (not FormData) — Vercel serverless functions don't parse multipart
+    const submitData = {
+      name: formData.name,
+      website: formData.website,
+      industry: formData.industry,
+      description: formData.description,
+      address: formData.address,
+      phone: formData.phone
+    };
+
+    const method = profileExists ? 'PUT' : 'POST';
 
     try {
       const res = await fetch(`/api/companies`, {
         method,
-        headers: { 'auth-token': token },
-        body: submitData
+        headers: {
+          'Content-Type': 'application/json',
+          'auth-token': token
+        },
+        body: JSON.stringify(submitData)
       });
 
       const result = await res.json();

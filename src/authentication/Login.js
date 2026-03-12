@@ -1,17 +1,22 @@
 import { Form, Container, Row, Col } from 'react-bootstrap';
 import { Fragment } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Navigate } from 'react-router-dom';
 import { useContext, useState } from 'react';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { UserContext } from '../context/userContext';
 
 const Login = (props) => {
-    const { setUser, setIsAuthenticated } = useContext(UserContext);
+    const { setUser, isAuthenticated, setIsAuthenticated } = useContext(UserContext);
     const navigate = useNavigate();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
+
+    // If already logged in, redirect to tenders
+    if (isAuthenticated) {
+        return <Navigate to="/tenders" replace />;
+    }
 
     const handleSubmit = async (e) => {
         e.preventDefault();

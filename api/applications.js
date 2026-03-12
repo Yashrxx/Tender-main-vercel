@@ -34,15 +34,30 @@ module.exports = async (req, res) => {
       if (!user) return res.status(401).json({ error: 'Access denied: no valid token' });
 
       const { tenderId, message } = req.body;
-      if (!tenderId) return res.status(400).json({ error: 'tenderId is required' });
-
-      // Get company by user email
+      if (!tenderId) return res.status(400).json({ error: 'tenderId is required' });      // Get company by user email
       const { data: company, error: companyError } = await supabase
         .from('companies')
         .select('*')
         .eq('email', user.email)
-        .single();
-      if (!company) return res.status(404).json({ error: 'Company not found. Create a company profile first.' });
+        .maybeSingle();
+
+      // If no company exists, auto-create a basic profile for the user
+      let applicantCompany = company;
+      if (!applicantCompany) {
+        const { data: newCompany, error: createError } = await supabase
+          .from('companies')
+          .insert([{
+            user_id: user.id,
+            email: user.email,
+            name: user.name || 'My Company',
+            industry: 'Other',
+            description: ''
+          }])
+          .select()
+          .single();
+        if (createError) return res.status(500).json({ error: 'Failed to auto-create company profile: ' + createError.message });
+        applicantCompany = newCompany;
+      }
 
       // Check tender exists
       const { data: tender, error: tenderError } = await supabase
@@ -50,12 +65,10 @@ module.exports = async (req, res) => {
         .select('*')
         .eq('id', tenderId)
         .single();
-      if (!tender) return res.status(404).json({ error: 'Tender not found' });
-
-      // Create application
+      if (!tender) return res.status(404).json({ error: 'Tender not found' });      // Create application
       const { data: newApp, error: appError } = await supabase
         .from('applications')
-        .insert([{ tender_id: tenderId, company_id: company.id, message }])
+        .insert([{ tender_id: tenderId, company_id: applicantCompany.id, message }])
         .select();
       if (appError) return res.status(500).json({ error: appError.message });
 
