@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken');
 const { body, validationResult } = require('express-validator');
 const supabase = require('../supabaseClient');
 
-const JWT_SECRET = 'yash@isarockstar';
+const JWT_SECRET = process.env.JWT_SECRET || '';
 
 // === Middleware to fetch logged-in user ===
 const fetchUser = async (req, res, next) => {

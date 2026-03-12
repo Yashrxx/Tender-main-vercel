@@ -8,15 +8,19 @@ import './Analytics.css'; // optional CSS for cards
 const Analytics = (props) => {
   const [stats, setStats] = useState({});
   const [chartData, setChartData] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchStats = async () => {
       try {
+        setLoading(true);
         const res = await fetch('/api/stats');
         const data = await res.json();
         setStats(data);
       } catch (err) {
         setStats(null);
+      } finally {
+        setLoading(false);
       }
     };
     fetchStats();
@@ -33,11 +37,16 @@ const Analytics = (props) => {
       { year: "2025-26", tenders: 49220 }
     ]);
   };
-
   return (
     <div className="analytics-container">
       <h2 style={{ color: props.mode === 'dark' ? 'thistle' : 'black', fontWeight: "bold" }}>Tender Dashboard</h2>
 
+      {loading ? (
+        <div style={{ display: 'flex', justifyContent: 'center', padding: '3rem' }}>
+          <div className="loading-spinner"></div>
+        </div>
+      ) : (
+      <>
       <div className="stats-cards">
         <div className="card cyan">Total Tenders<br /><strong>{stats.totalTenders || 0}</strong></div>
         <div className="card green">Open Tenders<br /><strong>{stats.openTenders || 0}</strong></div>
@@ -57,6 +66,8 @@ const Analytics = (props) => {
           </BarChart>
         </ResponsiveContainer>
       </div>
+      </>
+      )}
     </div>
   );
 };

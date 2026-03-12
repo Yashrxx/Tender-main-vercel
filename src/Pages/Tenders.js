@@ -8,6 +8,7 @@ const Tenders = () => {
   const [expandedRow, setExpandedRow] = useState(null);
   const [expandedDescriptions, setExpandedDescriptions] = useState({});
   const [searchQuery, setSearchQuery] = useState('');
+  const [loading, setLoading] = useState(true);
   const [filters, setFilters] = useState({
     category: 'All',
     location: 'All',
@@ -21,6 +22,7 @@ const Tenders = () => {
   useEffect(() => {
     const fetchAllTenders = async () => {
       try {
+        setLoading(true);
         const res = await fetch('/api/tenders?route=allTenders');
         const data = await res.json();
 
@@ -36,6 +38,8 @@ const Tenders = () => {
         console.error("Error fetching all tenders:", err);
         setAllTenders([]);
         setFilteredTenders([]);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -157,6 +161,11 @@ const Tenders = () => {
 
       <main className="tender-table-section">
         <h1>Tenders</h1>
+        {loading ? (
+          <div style={{ display: 'flex', justifyContent: 'center', padding: '3rem' }}>
+            <div className="loading-spinner"></div>
+          </div>
+        ) : (
         <div className="table-container">
           {filteredTenders.length === 0 ? (
             <p style={{ padding: "2rem", textAlign: "center" }}>No tenders found.</p>
@@ -249,6 +258,7 @@ const Tenders = () => {
             </table>
           )}
         </div>
+        )}
       </main>
     </div>
   );

@@ -2,7 +2,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { createClient } = require('@supabase/supabase-js');
 
-const JWT_SECRET = (process.env.JWT_SECRET || 'yash@isarockstar').trim();
+const JWT_SECRET = (process.env.JWT_SECRET || '').trim();
 const supabaseUrl = (process.env.SUPABASE_URL || '').trim();
 const supabaseKey = (process.env.SUPABASE_SERVICE_ROLE_KEY || '').trim();
 

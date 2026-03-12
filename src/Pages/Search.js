@@ -6,12 +6,14 @@ const Search = (props) => {
   const [query, setQuery] = useState('');
   const [companies, setCompanies] = useState([]);
   const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCompanies = async () => {
       try {
+        setLoading(true);
         const res = await fetch('/api/companies?route=allCompanies');
         const data = await res.json();
         if (Array.isArray(data)) {
@@ -21,6 +23,8 @@ const Search = (props) => {
         }
       } catch (err) {
         setCompanies([]);
+      } finally {
+        setLoading(false);
       }
     };
     fetchCompanies();
@@ -30,10 +34,28 @@ const Search = (props) => {
     setQuery(e.target.value);
     setPage(1);
   };
-
   const handleCompanyClick = (company) => {
-    navigate(`/company/${company._id}`, { state: { company } });
+    navigate(`/company/${company._id || company.id}`, { state: { company } });
   };
+
+  // Filter companies based on query
+  const filteredCompanies = companies.filter((c) => {
+    if (!query.trim()) return true;
+    const q = query.toLowerCase();
+    return (
+      (c.name && c.name.toLowerCase().includes(q)) ||
+      (c.industry && c.industry.toLowerCase().includes(q)) ||
+      (c.category && c.category.toLowerCase().includes(q)) ||
+      (c.description && c.description.toLowerCase().includes(q))
+    );
+  });
+
+  const ITEMS_PER_PAGE = 12;
+  const totalPages = Math.max(1, Math.ceil(filteredCompanies.length / ITEMS_PER_PAGE));
+  const paginatedCompanies = filteredCompanies.slice(
+    (page - 1) * ITEMS_PER_PAGE,
+    page * ITEMS_PER_PAGE
+  );
 
   return (
     <div className="company-page" data-mode={props.mode}>
@@ -66,18 +88,27 @@ const Search = (props) => {
           { label: 'Environment', value: 'Environmental Services' },
           { label: 'Machinery', value: 'Machinery & Industrial Supplies' }
         ].map(({ label, value }) => (
-          <span key={value} onClick={() => { setQuery(value); setPage(1); }}>
+          <span
+            key={value}
+            className={query === value ? 'active' : ''}
+            onClick={() => { setQuery(query === value ? '' : value); setPage(1); }}
+          >
             {label}
           </span>
         ))}
       </div>
 
-      <h3>Featured Companies</h3>
+      <h3>{query ? `Results for "${query}"` : 'Featured Companies'}</h3>
+      {loading ? (
+        <div style={{ display: 'flex', justifyContent: 'center', padding: '3rem' }}>
+          <div className="loading-spinner"></div>
+        </div>
+      ) : (
       <div className="company-grid">
-        {companies.length > 0 ? (
-          companies.slice(0, 12).map((company, index) => (
+        {paginatedCompanies.length > 0 ? (
+          paginatedCompanies.map((company, index) => (
             <div
-              key={index}
+              key={company.id || index}
               className="company-card"
               onClick={() => handleCompanyClick(company)}
             >
@@ -101,24 +132,30 @@ const Search = (props) => {
             </div>
           ))
         ) : (
-          <p>No companies found.</p>
+          <p>No companies found matching "{query}".</p>
         )}
       </div>
+      )}
 
+      {!loading && totalPages > 1 && (
       <div className="pagination">
         <button onClick={() => setPage((p) => Math.max(p - 1, 1))} disabled={page === 1}>
           &lt;
         </button>
-        <button
-          className={page === 1 ? 'active' : ''}
-          onClick={() => setPage(1)}
-        >
-          1
-        </button>
-        <button onClick={() => setPage((p) => p + 1)}>
+        {Array.from({ length: totalPages }, (_, i) => i + 1).map((num) => (
+          <button
+            key={num}
+            className={page === num ? 'active' : ''}
+            onClick={() => setPage(num)}
+          >
+            {num}
+          </button>
+        ))}
+        <button onClick={() => setPage((p) => Math.min(p + 1, totalPages))} disabled={page === totalPages}>
           &gt;
         </button>
       </div>
+      )}
     </div>
   );
 };

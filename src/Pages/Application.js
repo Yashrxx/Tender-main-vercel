@@ -7,16 +7,20 @@ const Application = () => {
   const [tender, setTender] = useState(null);
   const [message, setMessage] = useState('');
   const [loading, setLoading] = useState(false);
+  const [fetchingTender, setFetchingTender] = useState(true);
   const navigate = useNavigate();
   // Fetch tender details
   useEffect(() => {
     const fetchTender = async () => {
       try {
+        setFetchingTender(true);
         const res = await fetch(`/api/tenders?id=${id}`);
         const data = await res.json();
         setTender(data);
       } catch (error) {
         console.error('Error fetching tender:', error);
+      } finally {
+        setFetchingTender(false);
       }
     };
 
@@ -56,10 +60,13 @@ const Application = () => {
       setLoading(false);
     }
   };
-
   return (
     <div className="application-container">
-      {tender ? (
+      {fetchingTender ? (
+        <div style={{ display: 'flex', justifyContent: 'center', padding: '3rem' }}>
+          <div className="loading-spinner"></div>
+        </div>
+      ) : tender ? (
         <>
           <h1>Apply for Tender: {tender.title}</h1>
           <p><strong>Description:</strong> {tender.description}</p>
@@ -87,9 +94,8 @@ const Application = () => {
               {loading ? "Submitting..." : "Submit Application"}
             </button>
           </form>
-        </>
-      ) : (
-        <p>Loading tender details...</p>
+        </>      ) : (
+        <p>Tender not found.</p>
       )}
     </div>
   );

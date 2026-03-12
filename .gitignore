@@ -26,3 +26,5 @@ yarn-error.log*
 .env*.local
 .env
 backend/.env
+seed-supabase.js
+supabase-setup.sql
