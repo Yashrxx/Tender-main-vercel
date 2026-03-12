@@ -8,18 +8,16 @@ const CompanyDetails = () => {
     if (!company) return <div>No company data found.</div>;
 
     return (
-        <div className="company-details">
-            <img
-                src={company.coverImage
-                    ? company.coverImage
-                    : 'https://dummyimage.com/600x200/cccccc/000000.png&text=Cover'}
+        <div className="company-details">            <img
+                src={company.coverimage
+                    ? company.coverimage
+                    : 'https://picsum.photos/seed/default/600/200'}
                 alt="Cover"
                 className="cover-image"
-            />
-            <img
+            />            <img
                 src={company.logo
                     ? company.logo
-                    : 'https://dummyimage.com/100x100/cccccc/000000.png&text=Logo'}
+                    : 'https://ui-avatars.com/api/?name=' + encodeURIComponent(company.name || 'C') + '&background=6366f1&color=fff&size=200&bold=true&format=png'}
                 alt="Logo"
                 className="logo"
             />

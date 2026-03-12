@@ -111,12 +111,11 @@ const Search = (props) => {
               key={company.id || index}
               className="company-card"
               onClick={() => handleCompanyClick(company)}
-            >
-              <img
+            >              <img
                 src={
                   company.logo
                     ? company.logo
-                    : 'https://dummyimage.com/100x100/cccccc/000000.png&text=Logo'
+                    : 'https://ui-avatars.com/api/?name=' + encodeURIComponent(company.name || 'C') + '&background=6366f1&color=fff&size=200&bold=true&format=png'
                 }
                 alt={company.name}
                 style={{

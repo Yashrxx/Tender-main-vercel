@@ -44,11 +44,9 @@ const Profile = (props) => {
           description: data.description || '', address: data.address || '',
           email: data.email || user.email, phone: data.phone || '',
           logo: null, coverImage: null
-        });
-
-        setPreview({
-          logo: data.logo || 'https://cjpxhitihjewloswivcg.supabase.co/storage/v1/object/public/company-logos/whiteDressImg-1.jpg',
-          coverImage: data.coverImage || 'https://cjpxhitihjewloswivcg.supabase.co/storage/v1/object/public/company-coverimage/wallpaper-3.avif'
+        });        setPreview({
+          logo: data.logo || 'https://ui-avatars.com/api/?name=Company&background=6366f1&color=fff&size=200&bold=true&format=png',
+          coverImage: data.coverimage || 'https://picsum.photos/seed/default/800/300'
         });
 
         setProfileExists(true);
@@ -69,10 +67,9 @@ const Profile = (props) => {
         coverImage: null
       };
 
-      setFormData(fallback);
-      setPreview({
-        logo: 'https://cjpxhitihjewloswivcg.supabase.co/storage/v1/object/public/company-logos/whiteDressImg-1.jpg',
-        coverImage: 'https://cjpxhitihjewloswivcg.supabase.co/storage/v1/object/public/company-coverimage/wallpaper-3.avif'
+      setFormData(fallback);      setPreview({
+        logo: 'https://ui-avatars.com/api/?name=Company&background=6366f1&color=fff&size=200&bold=true&format=png',
+        coverImage: 'https://picsum.photos/seed/default/800/300'
       });
 
       setProfileExists(false);
