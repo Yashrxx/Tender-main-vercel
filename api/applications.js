@@ -118,6 +118,26 @@ module.exports = async (req, res) => {
       if (appsError) return res.status(500).json({ error: appsError.message });
 
       return res.status(200).json(apps || []);
+    }    // GET /api/applications?route=myApplications — get tenders I (my company) have applied to
+    if (req.method === 'GET' && req.query.route === 'myApplications') {
+      const user = getUser(req);
+      if (!user) return res.status(401).json({ error: 'Access denied: no valid token' });
+
+      const { data: company } = await supabase
+        .from('companies')
+        .select('id')
+        .eq('email', user.email)
+        .maybeSingle();
+      if (!company) return res.status(200).json([]);
+
+      const { data: apps, error } = await supabase
+        .from('applications')
+        .select('*, tender:tenders(id, title, description, category, deadline, budget, location, status, company:companies(name))')
+        .eq('company_id', company.id)
+        .order('created_at', { ascending: false });
+      if (error) return res.status(500).json({ error: error.message });
+
+      return res.status(200).json(apps || []);
     }
 
     return res.status(404).json({ error: 'Route not found' });

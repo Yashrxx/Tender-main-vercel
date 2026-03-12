@@ -47,10 +47,8 @@ const ReceivedApplications = ({ mode }) => {
   };
 
   return (
-    <div className={`received-apps-container ${mode === 'dark' ? 'dark-mode' : ''}`}>
-      <div className="received-apps-header">
+    <div className={`received-apps-container ${mode === 'dark' ? 'dark-mode' : ''}`}>      <div className="received-apps-header">
         <h1>Applications Received</h1>
-        <p className="subtitle">View all applications submitted for your published tenders</p>
       </div>
 
       {loading ? (

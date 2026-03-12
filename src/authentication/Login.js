@@ -99,7 +99,7 @@ const Login = (props) => {
                                             </button>
                                         </div>
 
-                                        {loading ? <div style={{ marginTop: '10px' }}><h6 style={{ display: 'flex', justifyContent: "center" }}>This may take a few seconds due to hosting on free services of github</h6></div> : ""}
+                                        {loading ? <div style={{ marginTop: '10px' }}><h6 style={{ display: 'flex', justifyContent: "center" }}>This may take a few seconds...</h6></div> : ""}
                                     </Form>
                                 </Col>
                             </Row>

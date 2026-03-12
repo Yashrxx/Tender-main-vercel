@@ -2,7 +2,7 @@
 .tenders-container {
   padding: 2rem;
   background-color: #f9fafb;
-  height:100vh;
+  min-height: 100vh;
 }
 
 /* Header */
@@ -69,6 +69,37 @@
   border-color: transparent;
 }
 
+/* Dashboard Tabs */
+.dashboard-tabs {
+  display: flex;
+  gap: 0;
+  margin-bottom: 0.5rem;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.dashboard-tab {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  background: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #6b7280;
+  cursor: pointer;
+  border-bottom: 3px solid transparent;
+  transition: all 0.2s;
+  margin-bottom: -2px;
+}
+
+.dashboard-tab:hover {
+  color: #4f46e5;
+}
+
+.dashboard-tab.active {
+  color: #6366f1;
+  border-bottom-color: #6366f1;
+  font-weight: 600;
+}
+
 /* Tender Cards */
 .tender-cards-container {
   display: grid;
@@ -93,6 +124,10 @@
 .tender-card:hover {
   transform: scale(1.015);
   box-shadow: 0 8px 18px rgba(0, 0, 0, 0.08);
+}
+
+.applied-card {
+  border-left: 4px solid #6366f1;
 }
 
 .card-header {
@@ -151,6 +186,31 @@
   font-size: 0.85rem;
   color: #4b5563;
   line-height: 1.6;
+}
+
+.applied-proposal {
+  background: #f0f0ff;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  margin-top: 0.25rem;
+}
+
+.applied-proposal p {
+  margin: 0;
+  font-size: 0.88rem;
+  color: #374151;
+}
+
+.proposal-text {
+  color: #4b5563 !important;
+  font-style: italic;
+  margin-top: 0.25rem !important;
+}
+
+.applied-date {
+  font-size: 0.8rem;
+  color: #9ca3af;
+  margin-top: 0.25rem;
 }
 
 .view-more-btn {
@@ -270,6 +330,23 @@
   color: white;
 }
 
+.dark-mode .dashboard-tabs {
+  border-bottom-color: #4b5563;
+}
+
+.dark-mode .dashboard-tab {
+  color: #9ca3af;
+}
+
+.dark-mode .dashboard-tab:hover {
+  color: #a5b4fc;
+}
+
+.dark-mode .dashboard-tab.active {
+  color: #a5b4fc;
+  border-bottom-color: #a5b4fc;
+}
+
 .dark-mode .tender-card {
   background-color: #374151;
   border-color: #4b5563;
@@ -281,6 +358,10 @@
   box-shadow: 0 8px 18px rgba(0, 0, 0, 0.6);
 }
 
+.dark-mode .applied-card {
+  border-left-color: #818cf8;
+}
+
 .dark-mode .card-header h3 {
   color: #f9fafb;
 }
@@ -288,6 +369,22 @@
 .dark-mode .card-body p,
 .dark-mode .description {
   color: #e5e7eb;
+}
+
+.dark-mode .applied-proposal {
+  background: #312e81;
+}
+
+.dark-mode .applied-proposal p {
+  color: #e5e7eb;
+}
+
+.dark-mode .proposal-text {
+  color: #c7d2fe !important;
+}
+
+.dark-mode .applied-date {
+  color: #6b7280;
 }
 
 .dark-mode .status-chip.open {

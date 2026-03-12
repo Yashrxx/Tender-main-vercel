@@ -94,6 +94,25 @@ module.exports = async (req, res) => {
       if (tenderError) return res.status(500).json({ error: tenderError.message });
 
       return res.status(201).json({ message: 'Tender published successfully', tender: newTender });
+    }    // GET /api/tenders?route=myTenders — get tenders filed by the logged-in user's company
+    if (req.method === 'GET' && route === 'myTenders') {
+      const user = getUser(req);
+      if (!user) return res.status(401).json({ error: 'Access denied: no valid token' });
+
+      const { data: company } = await supabase
+        .from('companies')
+        .select('id')
+        .eq('email', user.email)
+        .maybeSingle();
+      if (!company) return res.status(200).json([]);
+
+      const { data: tenders, error } = await supabase
+        .from('tenders')
+        .select('*, company:companies(name, phone)')
+        .eq('company_id', company.id)
+        .order('created_at', { ascending: false });
+      if (error) return res.status(500).json({ error: error.message });
+      return res.status(200).json(tenders || []);
     }
 
     return res.status(404).json({ error: 'Route not found' });

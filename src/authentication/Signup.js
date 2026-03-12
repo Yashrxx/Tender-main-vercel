@@ -116,12 +116,10 @@ const Signup = (props) => {
           <button type="submit" className="btn btn-primary" disabled={loading}>
             {loading ? "Submitting..." : "Submit"}
           </button>
-        </div>
-
-        {loading && (
+        </div>        {loading && (
           <div style={{ marginTop: '10px' }}>
             <h6 style={{ textAlign: 'center' }}>
-              This may take a few seconds due to free hosting
+              This may take a few seconds...
             </h6>
           </div>
         )}
