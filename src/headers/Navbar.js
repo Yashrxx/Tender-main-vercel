@@ -8,12 +8,14 @@ import TAT from '../assets/img/TAT_Logo.jpeg'
 import './Navbar.css'
 const Navbar = (props) => {
     const navigate = useNavigate();
-    const { user, setUser, isAuthenticated, setIsAuthenticated } = useContext(UserContext);
-    const handleLogout = () => {
-        localStorage.removeItem("token")
+    const { user, setUser, isAuthenticated, setIsAuthenticated } = useContext(UserContext);    const handleLogout = () => {
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        localStorage.removeItem("username");
+        localStorage.removeItem("email");
         setUser(null);
         setIsAuthenticated(false);
-        navigate("/")
+        navigate("/");
     }
     let location = useLocation();
     useEffect(() => {

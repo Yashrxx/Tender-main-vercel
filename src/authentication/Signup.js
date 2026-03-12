@@ -52,13 +52,13 @@ const Signup = (props) => {
       } catch (err) {
         console.error("Invalid JSON response");
         throw new Error("Signup failed: Server did not return valid JSON");
-      }
-
-      if (json.success) {
+      }      if (json.success) {
         localStorage.setItem('token', json.authtoken);
         localStorage.setItem('user', JSON.stringify(json.user));
+        localStorage.setItem('username', json.user.name);
+        localStorage.setItem('email', json.user.email);
         setIsAuthenticated(true);
-        setUser(json.user.name);
+        setUser(json.user);
         toast.success("Signup successful!", {
           position: "top-center",
           theme: "colored"
