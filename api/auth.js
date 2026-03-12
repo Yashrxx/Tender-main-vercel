@@ -40,15 +40,7 @@ module.exports = async (req, res) => {
       const secPass = await bcrypt.hash(password, salt);
       const { data: newUser, error: createError } = await supabase.from('users').insert([{ name, email, phone, password: secPass }]).select();
       if (createError) {
-        return res.status(500).json({
-          success: false,
-          error: String(createError.message || createError),
-          code: createError.code,
-          hint: createError.hint,
-          details: createError.details,
-          statusCode: createError.statusCode,
-          raw: Object.getOwnPropertyNames(createError).reduce((o, k) => { o[k] = createError[k]; return o; }, {})
-        });
+        return res.status(500).json({ success: false, error: createError.message || JSON.stringify(createError), code: createError.code, hint: createError.hint, details: createError.details });
       }
       if (!newUser || newUser.length === 0) {
         return res.status(500).json({ success: false, error: 'Insert returned no data' });
