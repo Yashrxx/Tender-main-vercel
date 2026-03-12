@@ -199,7 +199,7 @@ const ApplyTender = (props) => {
 
         <div style={{ display: 'flex', justifyContent: 'center' }}>
           <button type="submit" className="btn btn-primary" disabled={loading}>
-            {loading ? "Publishing..." : "Publidh Tender"}
+            {loading ? "Publishing..." : "Publish Tender"}
           </button>
         </div>
 

@@ -55,7 +55,7 @@ const Dashboard = ({mode}) => {
     <div className={`tenders-container ${mode === 'dark' ? 'dark-mode' : ''}`}>
       <div className="header">
         <h1>My Tenders</h1>
-        <Link className="new-tender" to="/applications">New Tender</Link>
+        <Link className="new-tender" to="/applyTender">New Tender</Link>
       </div>
 
       <div className="filters-scroll">

@@ -14,6 +14,7 @@ import CompanyDetails from "./Pages/companyDetails";
 import Application from "./Pages/Application";
 import ProtectedRoute from "./authentication/ProtectedRoute";
 import Analytics from './Charts/Analytics';
+import ReceivedApplications from './Pages/ReceivedApplications';
 import About from './Pages/About'
 
 function App() {
@@ -68,6 +69,7 @@ function App() {
           <Route path="/apply/:id" element={<Application mode={mode}/>} />
           <Route path="/company/:id" element={<CompanyDetails mode={mode}/>} />
           <Route path="/analytics" element={<Analytics mode={mode}/>} />
+          <Route path="/applications" element={<ReceivedApplications mode={mode}/>} />
           <Route path="/about" element={<About mode={mode}/>} />
         </Route>
       </Routes>

@@ -60,18 +60,49 @@ module.exports = async (req, res) => {
       if (appError) return res.status(500).json({ error: appError.message });
 
       return res.status(201).json({ application: newApp });
-    }
-
-    // GET /api/applications?tenderId=X — get applications for a tender
-    if (req.method === 'GET') {
+    }    // GET /api/applications?tenderId=X — get applications for a tender
+    if (req.method === 'GET' && req.query.tenderId) {
       const tenderId = req.query.tenderId;
-      if (!tenderId) return res.status(400).json({ error: 'tenderId is required' });
 
       const { data: apps, error } = await supabase
         .from('applications')
         .select('*, company:companies(*)')
         .eq('tender_id', tenderId);
       if (error) return res.status(500).json({ error: error.message });
+
+      return res.status(200).json(apps || []);
+    }
+
+    // GET /api/applications?route=received — get all applications received on my company's tenders
+    if (req.method === 'GET' && req.query.route === 'received') {
+      const user = getUser(req);
+      if (!user) return res.status(401).json({ error: 'Access denied: no valid token' });
+
+      // Get the company for this user
+      const { data: company, error: companyError } = await supabase
+        .from('companies')
+        .select('id')
+        .eq('email', user.email)
+        .maybeSingle();
+      if (!company) return res.status(404).json({ error: 'Company not found. Create a company profile first.' });
+
+      // Get all tenders belonging to this company
+      const { data: tenders, error: tenderError } = await supabase
+        .from('tenders')
+        .select('id, title, category, deadline, status')
+        .eq('company_id', company.id);
+      if (tenderError) return res.status(500).json({ error: tenderError.message });
+      if (!tenders || tenders.length === 0) return res.status(200).json([]);
+
+      const tenderIds = tenders.map(t => t.id);
+
+      // Get all applications for those tenders, with company info
+      const { data: apps, error: appsError } = await supabase
+        .from('applications')
+        .select('*, company:companies(id, name, email, phone, industry), tender:tenders(id, title, category, deadline, status)')
+        .in('tender_id', tenderIds)
+        .order('createdAt', { ascending: false });
+      if (appsError) return res.status(500).json({ error: appsError.message });
 
       return res.status(200).json(apps || []);
     }
